@@ -46,9 +46,6 @@
 #include <iostream>
 using namespace std;
 
-#include <iostream>
-using namespace std;
-
 char getGrade(int score);
 
 int main() {
