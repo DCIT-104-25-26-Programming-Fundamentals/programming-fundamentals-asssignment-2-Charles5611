@@ -36,6 +36,10 @@
 
 #include <iostream>
 using namespace std;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1328c8153caa3692bf704b8afd4e855d00e2c712
 bool isPrime(int n);
 
 int main() {
