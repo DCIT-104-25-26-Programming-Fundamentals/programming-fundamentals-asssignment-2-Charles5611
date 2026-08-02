@@ -64,4 +64,137 @@
 #include <iomanip>
 #include <string>
 using namespace std;
+void readMatrix(int matrix[10][10], int rows, int cols);
+void displayMatrix(int matrix[10][10], int rows, int cols, string title);
+void transposeMatrix(int matrix[10][10], int rows, int cols, int result[10][10]);
+void addMatrices(int a[10][10], int b[10][10], int result[10][10], int rows, int cols);
+void multiplyMatrices(int a[10][10], int b[10][10], int result[10][10], int rowsA, int colsA, int colsB);
 
+int main() {
+    int choice;
+
+    cout << "Matrix Operations Menu" << endl;
+    cout << "1. Transpose a Matrix" << endl;
+    cout << "2. Add Two Matrices" << endl;
+    cout << "3. Multiply Two Matrices" << endl;
+    cout << "Enter choice: ";
+    cin >> choice;
+
+    if (choice == 1) {
+        int rows, cols;
+        int matrix[10][10];
+        int result[10][10];
+
+        cout << "Enter number of rows: ";
+        cin >> rows;
+        cout << "Enter number of columns: ";
+        cin >> cols;
+
+        readMatrix(matrix, rows, cols);
+        displayMatrix(matrix, rows, cols, "Original Matrix:");
+
+        transposeMatrix(matrix, rows, cols, result);
+        displayMatrix(result, cols, rows, "Transposed Matrix:");
+    }
+    else if (choice == 2) {
+        int rows, cols;
+        int a[10][10], b[10][10], result[10][10];
+
+        cout << "Enter number of rows: ";
+        cin >> rows;
+        cout << "Enter number of columns: ";
+        cin >> cols;
+
+        cout << endl << "Enter Matrix A:" << endl;
+        readMatrix(a, rows, cols);
+        cout << endl << "Enter Matrix B:" << endl;
+        readMatrix(b, rows, cols);
+
+        displayMatrix(a, rows, cols, "Matrix A:");
+        displayMatrix(b, rows, cols, "Matrix B:");
+
+        addMatrices(a, b, result, rows, cols);
+        displayMatrix(result, rows, cols, "Sum Matrix:");
+    }
+    else if (choice == 3) {
+        int rowsA, colsA, rowsB, colsB;
+        int a[10][10], b[10][10], result[10][10];
+
+        cout << "Enter rows of Matrix A: ";
+        cin >> rowsA;
+        cout << "Enter columns of Matrix A: ";
+        cin >> colsA;
+
+        cout << "Enter rows of Matrix B: ";
+        cin >> rowsB;
+        cout << "Enter columns of Matrix B: ";
+        cin >> colsB;
+
+        if (colsA != rowsB) {
+            cout << "Error: Columns of A must equal rows of B." << endl;
+            return 0;
+        }
+
+        cout << endl << "Enter Matrix A:" << endl;
+        readMatrix(a, rowsA, colsA);
+        cout << endl << "Enter Matrix B:" << endl;
+        readMatrix(b, rowsB, colsB);
+
+        displayMatrix(a, rowsA, colsA, "Matrix A:");
+        displayMatrix(b, rowsB, colsB, "Matrix B:");
+
+        multiplyMatrices(a, b, result, rowsA, colsA, colsB);
+        displayMatrix(result, rowsA, colsB, "Product Matrix:");
+    }
+    else {
+        cout << "Invalid choice." << endl;
+    }
+
+    return 0;
+}
+
+void readMatrix(int matrix[10][10], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> matrix[i][j];
+        }
+    }
+}
+
+void displayMatrix(int matrix[10][10], int rows, int cols, string title) {
+    cout << endl << title << endl;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << setw(5) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void transposeMatrix(int matrix[10][10], int rows, int cols, int result[10][10]) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[j][i] = matrix[i][j];
+        }
+    }
+}
+
+void addMatrices(int a[10][10], int b[10][10], int result[10][10], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = a[i][j] + b[i][j];
+        }
+    }
+}
+
+void multiplyMatrices(int a[10][10], int b[10][10], int result[10][10], int rowsA, int colsA, int colsB) {
+    for (int i = 0; i < rowsA; i++) {
+        for (int j = 0; j < colsB; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < colsA; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+}
